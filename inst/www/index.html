@@ -31,7 +31,7 @@
       var req = ocpu.call("getChemSimNet",{cids:txtinput,cutoff:coef}, function(session) {//calls R function: 
 	    console.log(session);
 		$("#downloadChemBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[6];
+		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
        	$("#downloadChemBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
 	    hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
