@@ -10,7 +10,7 @@ install.packages('devtools', repos="http://cran.rstudio.com/")
 library(devtools)
 source('https://bioconductor.org/biocLite.R')
 install_github('barupal/metamapp')
-library(metabox)
+library(MetaMapp2016)
 library(opencpu)
 opencpu$browse('/library/MetaMapp2016/www')
 ```
