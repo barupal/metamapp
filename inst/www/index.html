@@ -88,8 +88,8 @@
 			console.log(session);
 			$("#downloadKRP_Btn").removeAttr('disabled');
 			$("#downloadMetaMappBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
-			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[7];
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[7];
+			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
 			$("#downloadMetaMappBtn").append('<a href="'+sifurl+'" target="_blank">Download Node Attribute file</a>');
 			$("#downloadKRP_Btn").append('<a href="'+sifurl1+'" target="_blank">Download MetaMapp Network file</a>')
 			hideSpinner(loadSpinner);
