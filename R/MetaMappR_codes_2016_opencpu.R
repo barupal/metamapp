@@ -108,7 +108,7 @@ getMetaMapp <- function (rsess, pvalind=1, cutoff=0.7) {
 runMetaMapp <- function(stat_file, cutoff=0.7) {
   cfile <- strsplit(stat_file,"\n")[[1]]
   df1 <- do.call(rbind, lapply(cfile, function (x) { strsplit(x,"\t")[[1]]  } ))
-  colnames(df1) <- df1[1,]
+  colnames(df1) <- sapply(df1[1,],as.character)
   df1 <- df1[-1,]
   getKEGGRpairs(df1[,1][is.na(df1[,1])==FALSE], df1[,2][is.na(df1[,1])==FALSE], cutoff)
   #exportdf <- data.frame(Pubchem_ID=df1[,1][is.na(df1[,1])==FALSE], KEGG_ID=df1[,2][is.na(df1[,1])==FALSE], CompoundName=df1[,3][is.na(df1[,1])==FALSE])
