@@ -49,7 +49,7 @@
       var req = ocpu.call("getKEGGRpairs",{cids:cids,keggids:keggids,cutoff:coef}, function(session) {//calls R function: 
 	    console.log(session);
 		$("#downloadKRPBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[6];
+		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[1];
        	$("#downloadKRPBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
 		hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
