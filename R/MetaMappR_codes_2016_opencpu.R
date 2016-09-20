@@ -111,6 +111,8 @@ runMetaMapp <- function(stat_file, cutoff=0.7) {
   colnames(df1) <- sapply(df1[1,],as.character)
   df1 <- df1[-1,]
   
+  df1 <- as.data.frame(df1)
+  
   for (j in 4:ncol(df1)) {
       df1[,j] <- as.numeric(levels(df1[,j]))[df1[,j]]
   }
