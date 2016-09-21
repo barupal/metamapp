@@ -1,4 +1,4 @@
-PubChem_ID	KEGG_ID	Compound_Name	Condition_A_p_value	Condition_A_foldchange	Condition_B_p_value	Condition_B_foldchange	Condition_C_p_value	Condition_C_foldchange
+PubChem_ID	KEGG_ID	Compound_Name	Condition_A_pvalue	Condition_A_foldchange	Condition_B_pvalue	Condition_B_foldchange	Condition_C_pvalue	Condition_C_foldchange
 92746	C05437	zymosterol	0.081472987	0.360788455	0.119741784	1.71332276	0.051174684	1.469711467
 439205	C00312	xylulose NIST	0.141574892	0.483362522	0.098184373	0.856553026	0.038270512	0.693515434
 135191	C00181	xylose	0.172130713	1.35643422	0.791855231	1.70951417	0.495957667	4.600313424
