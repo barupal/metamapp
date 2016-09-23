@@ -111,13 +111,16 @@ runMetaMapp <- function(stat_file, cutoff=0.7) {
   colnames(df1) <- sapply(df1[1,],as.character)
   df1 <- df1[-1,]
   
+  cids1 <- df1[,1]
+  keggids1 <- df1[,2]
+  
   df1 <- as.data.frame(df1)
   
   for (j in 4:ncol(df1)) {
       df1[,j] <- as.numeric(levels(df1[,j]))[df1[,j]]
   }
   
-  getKEGGRpairs(df1[,1][is.na(df1[,1])==FALSE], df1[,2][is.na(df1[,1])==FALSE], cutoff)
+  getKEGGRpairs(cids1, keggids1, cutoff)
   #exportdf <- data.frame(Pubchem_ID=df1[,1][is.na(df1[,1])==FALSE], KEGG_ID=df1[,2][is.na(df1[,1])==FALSE], CompoundName=df1[,3][is.na(df1[,1])==FALSE])
   exportdf <- as.data.frame(setNames(replicate(length(grep("pvalue",colnames(df1))), rep("No Change",length(df1[,1])), simplify = F), paste(colnames(df1)[grep("foldchange",colnames(df1))],"_direction",sep="") ), stringsAsFactors=FALSE)
 
