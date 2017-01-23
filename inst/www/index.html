@@ -14,11 +14,11 @@
   <script type="text/javascript" src="mETABOX.js"></script>
   <script type="text/javascript" src="bootstrap.js"></script>
   <script type="text/javascript" src="spin.js"></script>
-  <script> 
+  <script>
   </script>
   <title>MetaMapp 2016</title>
   <script>
-  
+
   $(function(){
 
 	// Chemical Similarity Download
@@ -28,7 +28,7 @@
 	  var txtinput = $("#txtinputChem").val().trim().split(/\r{1,}|\r\n{1,}|\n{1,}/);
 	  var txtinput = txtinput.map(Number);
 	  var coef = Number($("#coefchem").val());
-      var req = ocpu.call("getChemSimNet",{cids:txtinput,cutoff:coef}, function(session) {//calls R function: 
+      var req = ocpu.call("getChemSimNet",{cids:txtinput,cutoff:coef}, function(session) {//calls R function:
 	    console.log(session);
 		$("#downloadChemBtn").removeAttr('disabled');
 		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
@@ -36,8 +36,8 @@
 	    hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
 	})
-	
-	
+
+
 	// Chemical + Kegg Reaction Pair Download
 	$("#computeKRP").click(function(){
 	  var loadSpinner = showSpinner(txt='** Calculating Chemical and BioChemical Networks .....');
@@ -46,62 +46,62 @@
 	  var cids = txtinput.map(function(e){ return(e.split("\t")[0]) }).map(Number);
 	  var keggids = txtinput.map(function(e){ return(e.split("\t")[1]) })
 	  var coef = Number($("#coefkrp").val());
-      var req = ocpu.call("getKEGGRpairs",{cids:cids,keggids:keggids,cutoff:coef}, function(session) {//calls R function: 
+      var req = ocpu.call("getKEGGRpairs",{cids:cids,keggids:keggids,cutoff:coef}, function(session) {//calls R function:
 	    console.log(session);
 		$("#downloadKRPBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
+		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[6];
        	$("#downloadKRPBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
 		hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
 	})
-	
+
 	// Mass Spectral Similarity Download
 	$("#computeSpec").click(function(){
 		alert("This feature would be available soon!")
 
 	})
-	
+
 	// Node Attribute file Download
-	
+
 	$("#computeAttr").click(function(){
 		var loadSpinner = showSpinner(txt='** Calculating TTest and Node Attributes for Cytoscape .....');
 		$("#downloadAttrBtn").empty();
 		var txtinput = $("#txtinputAttr").val().trim();
 		var coef = Number($("#sampelcount").val());
-		var req = ocpu.call("getNodeAttributes",{stat_file:txtinput,samplecount:coef}, function(session) {//calls R function: 
+		var req = ocpu.call("getNodeAttributes",{stat_file:txtinput,samplecount:coef}, function(session) {//calls R function:
 			console.log(session);
 			$("#downloadAttrBtn").removeAttr('disabled');
 			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
 			$("#downloadAttrBtn").append('<a href="'+sifurl+'" target="_blank">Download Node Attribute file</a>')
 			hideSpinner(loadSpinner);
 		}).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
-	})	
-	
-	
+	})
+
+
 	$("#computeMetaMapp").click(function(){
 		var loadSpinner = showSpinner(txt='** Calculating MetaMapp Files .....');
 		$("#downloadMetaMappBtn").empty();
 		$("#downloadKRP_Btn").empty();
 		var txtinput = $("#rawinput").val().trim();
 		//var coef = Number($("#sampelcount").val());
-		var req = ocpu.call("runMetaMapp",{stat_file:txtinput}, function(session) {//calls R function: 
+		var req = ocpu.call("runMetaMapp",{stat_file:txtinput}, function(session) {//calls R function:
 			console.log(session);
 			$("#downloadKRP_Btn").removeAttr('disabled');
 			$("#downloadMetaMappBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[7];
-			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
-			$("#downloadMetaMappBtn").append('<a href="'+sifurl+'" target="_blank">Download Node Attribute file</a>');
-			$("#downloadKRP_Btn").append('<a href="'+sifurl1+'" target="_blank">Download MetaMapp Network file</a>')
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
+			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[7];
+			$("#downloadMetaMappBtn").append('<a href="'+sifurl1+'" target="_blank">Download Node Attribute file</a>');
+			$("#downloadKRP_Btn").append('<a href="'+sifurl+'" target="_blank">Download MetaMapp Network file</a>')
 			hideSpinner(loadSpinner);
 		}).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
-	})	
-	
-	
-	
-	
-	
-	
-	})	
+	})
+
+
+
+
+
+
+	})
   </script>
 </head>
 
@@ -111,37 +111,37 @@
 
 
   <div id="wrapper">
-    <!-- Navigation -->       
+    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<a class="navbar-brand" >MetaMapp : Mapping of Metabolites by Chemical and Biochemical relationships</a>
-	</nav>  
+	</nav>
       <div id="includedNav">
 	  <div class="navbar-header">
 </div>
 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav side-nav">
-        
+
     </ul>
 </div>
-	  
-	  
-	  
-	  
+
+
+
+
 	  </div>
-    
+
     <div id="page-wrapper">
       <div class="container-fluid">
         <!-- Page Heading -->
         <div class="row">
           <div class="col-lg-12">
-    
+
 
           </div>
         </div>
         <!-- /.row -->
         <!-- Main content -->
-		
+
 		<div class="row"> <!-- Generate Node Attribute files -->
           <div class="col-lg-12">
             <div class="panel panel-info">
@@ -154,18 +154,18 @@
                     <label for="rawinput">Paste Statistical Results.  ( <a href="metamapp_example.txt" target="_blank"> Example Data File </a> )   </label>
                     <textarea class="form-control" id="rawinput" name="txtinput" rows="5"></textarea>
                     <p class="help-block"> First three columns in the input file should be PubChem ID, KEGG ID and Name of Compounds, then followed by pair of columns for pvalue and fold-changes for each statistical comparison. Please use the example file as a templete. It is recommended to use median to calcualte the fold-changes, as median are not sensitive to outliers. For getting KEGG or PubChem IDs for metabolites names, use <a href="http://ec2-54-169-226-53.ap-southeast-1.compute.amazonaws.com/ocpu/library/ChemIDConvert/www/" target="_blank"> ChemIDConvert </a> tool.  For statistical analysis,  use <a href="http://ec2-54-169-226-53.ap-southeast-1.compute.amazonaws.com/ocpu/library/MetaBox/www/" target="_blank"> MetaBox </a> software. A pvalue of 0.05 will be used to identify the significantly altered metabolites. Output files are a Cytoscape network in .SIF format and a node attribute file. Cytoscape can be downloaded from here  <a href="http://www.cytoscape.org/" target="_blank">  Cytoscape.Org </a>  </p>
-                  </div>                 				  				  
+                  </div>
                   <!-- /.row -->
                   <button id="computeMetaMapp" type="button" class="btn btn-primary">Compute</button>
 				  <button id="downloadKRP_Btn" type="button" class="btn btn-default" disabled><i class="fa fa-download"></i> Download MetaMapp network</button>
 				  <button id="downloadMetaMappBtn" type="button" class="btn btn-default" disabled><i class="fa fa-download" ></i> Download Node Attribute file</button>
                 </form>
               </div>
-            </div>		
+            </div>
           </div>
         </div>
-		
-		
+
+
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -192,12 +192,12 @@
 				  <button id="downloadChemBtn" type="button" class="btn btn-default" disabled>Download network</button>
                 </form>
               </div>
-            </div>		
+            </div>
           </div>
         </div>
-		
-		
-		
+
+
+
 		<div class="row"> <!-- KEGG reaction pair and chemical similarity network both -->
           <div class="col-lg-12">
             <div class="panel panel-success">
@@ -224,15 +224,12 @@
 				  <button id="downloadKRPBtn" type="button" class="btn btn-default" disabled><i class="fa fa-download"></i> Download network</button>
                 </form>
               </div>
-            </div>		
+            </div>
           </div>
         </div>
-		
-		
 
-		
-		
-		
+
+
 		<div class="row"> <!-- Generate Node Attribute files -->
           <div class="col-lg-12">
             <div class="panel panel-info">
@@ -246,7 +243,7 @@
                     <textarea class="form-control" id="txtinputAttr" name="txtinput" rows="5"></textarea>
                     <p class="help-block">First row should be header describing class names of each sample and the first column should contain PubChem CIDs. Eeach row should be peak intensities of metabolites across samples. This tool would calculate a T-Test (two sided and equal variance) between the two groups for each metabolite and return p-values and fold-change (median of class 1/median of class 2) . Minimam number of samples per group should be three. And both classes should have equal number of samples.   <a href="ttest_example_file.txt" target="_blank"> Example Data File </a> </p>
                   </div>
-                  
+
 				  <div class="row">
                     <div class="col-lg-3">
                       <div class="form-group">
@@ -255,65 +252,60 @@
                       </div>
                     </div>
                   </div>
-				  
+
                   <!-- /.row -->
                   <button id="computeAttr" type="button" class="btn btn-primary">Compute</button>
 				  <button id="downloadAttrBtn" type="button" class="btn btn-default" disabled><i class="fa fa-download" ></i> Download Node Attribute file</button>
                 </form>
               </div>
-            </div>		
+            </div>
           </div>
         </div>
-		
-		
-		
-		
-		
-		
-	
-	
 
-		<div class="row"> 
+
+
+
+		<div class="row">
           <div class="col-lg-12">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title"><a data-toggle="collapse" data-target="#args" href="#">Instructions and citations</a></h3>
             </div>
               <div id="args" class="panel-body collapse in">
-				<p>Files downloaded from here need to be imported into Cytoscape for visualization. For more details - <a href="#">Visit this page<a> </p> 			  
+				<p>Files downloaded from here need to be imported into Cytoscape for visualization. For more details - <a href="#">Visit this page</a> </p>
                 <form role="form">
-                  <div class="form-group">                    
+                  <div class="form-group">
 					<p>Barupal, Dinesh K., Pradeep K. Haldiya, Gert Wohlgemuth, Tobias Kind, Shanker L. Kothari, Kent E. Pinkerton, and Oliver Fiehn. "MetaMapp: mapping and visualizing metabolomic data by integrating information from biochemical pathways and chemical and mass spectral similarity." BMC bioinformatics 13, no. 1 (2012): 99.</p>
 					<p>Hartman, A. L., Lough, D. M., Barupal, D. K., Fiehn, O., Fishbein, T., Zasloff, M., & Eisen, J. A. (2009). Human gut microbiome adopts an alternative state following small bowel transplantation. Proceedings of the National Academy of Sciences, 106(40), 17187-17192.</p>
-					<p>Grapov, Dmitry, Kwanjeera Wanichthanarak, and Oliver Fiehn. "MetaMapR: pathway independent metabolomic network analysis incorporating unknowns." Bioinformatics (2015): btv194.</p>					
+					<p>Grapov, Dmitry, Kwanjeera Wanichthanarak, and Oliver Fiehn. "MetaMapR: pathway independent metabolomic network analysis incorporating unknowns." Bioinformatics (2015): btv194.</p>
                   </div>
-                  
+
                   <!-- /.row -->
 
                 </form>
               </div>
-            </div>		
+            </div>
           </div>
         </div>
-		
-		
+
+
       <!-- notify box -->
         <div id="notifyBox" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
           <div class="modal-dialog"><div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4>Computing ...</h4>
-              <span id="notifyTxt"></p>
+              <span id="notifyTxt"></span>
             </div>
             <div class="modal-body"><div style="height:200px">
               <span id="loading_spinner" style="position: absolute;display: block;top: 50%;left: 50%;"></span>
             </div></div>
           </div></div>
         </div>
-        <!-- /.notify box --> 
-	   
-	   
-	   
+        <!-- /.notify box -->
+
+
+
       </div>
       <!-- /.container-fluid -->
     </div>
