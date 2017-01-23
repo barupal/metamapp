@@ -2,7 +2,6 @@
 # @version 1.0 July 2016
 # @use call "getMetaMapp" function via a Ajax call from JS.
 
-
 getChemSimNet <- function (cids, cutoff=0.7) {
   #cids <- c(1:5)
   #cutoff <- 0.7
@@ -25,6 +24,23 @@ getChemSimNet <- function (cids, cutoff=0.7) {
       s[lower.tri(s)]<-0
       chemsimdf <- do.call(rbind,sapply(1:length(cids), function (k) { if(length(which(s[k,]>cutoff))>0) {cbind(cids[k],"tmsim",cids[which(s[k,]>cutoff)])}} ))
       chemsimdf <- rbind(chemsimdf, cbind(cids,"tmsim",""), dfmax )
+
+      ## Duplicated edges removal
+      chemsimdf <- chemsimdf[-which(chemsimdf[,3]==""),]
+      chemsimdf <- rbind(chemsimdf,cbind(chemsimdf[,3], chemsimdf[,2], chemsimdf[,1]))
+      chemsimdf <-  chemsimdf[!duplicated( chemsimdf),]
+      chemsimdf <- chemsimdf[order(chemsimdf[,3],decreasing = F),]
+      chemsimdf <- chemsimdf[order(chemsimdf[,1],decreasing = F),]
+
+      pmids_a <- cids
+
+      for (i in 1:length(pmids_a)) {
+        sind <- c((max(which(chemsimdf[,1]==pmids_a[i])) +1) :nrow(chemsimdf))
+        chemsimdf[,3][which(chemsimdf[,3][sind]==pmids_a[i]) + (sind[1]-1) ] <- "XX"
+      }
+      chemsimdf <- chemsimdf[-which(chemsimdf[,3]=="XX"),]
+
+
       write.table(chemsimdf,file=paste(c("chemsim_",gsub("[.]","",as.character(cutoff)),".sif"),collapse=""), quote=FALSE,sep="\t",col.names=FALSE,row.names=FALSE)  ## To write the cytoscape network file as an output
       return(chemsimdf)
   } else{
@@ -46,6 +62,22 @@ getChemSimNet <- function (cids, cutoff=0.7) {
   s[lower.tri(s)]<-0
   chemsimdf <- do.call(rbind,sapply(1:length(cids), function (k) { if(length(which(s[k,]>cutoff))>0) {cbind(cids[k],"tmsim",cids[which(s[k,]>cutoff)])}} ))
   chemsimdf <- rbind(chemsimdf, cbind(cids,"tmsim",""), dfmax )
+
+  ## Duplicated edges removal
+  chemsimdf <- chemsimdf[-which(chemsimdf[,3]==""),]
+  chemsimdf <- rbind(chemsimdf,cbind(chemsimdf[,3], chemsimdf[,2], chemsimdf[,1]))
+  chemsimdf <-  chemsimdf[!duplicated( chemsimdf),]
+  chemsimdf <- chemsimdf[order(chemsimdf[,3],decreasing = F),]
+  chemsimdf <- chemsimdf[order(chemsimdf[,1],decreasing = F),]
+
+  pmids_a <- cids 
+
+  for (i in 1:length(pmids_a)) {
+    sind <- c((max(which(chemsimdf[,1]==pmids_a[i])) +1) :nrow(chemsimdf))
+    chemsimdf[,3][which(chemsimdf[,3][sind]==pmids_a[i]) + (sind[1]-1) ] <- "XX"
+  }
+  chemsimdf <- chemsimdf[-which(chemsimdf[,3]=="XX"),]
+
   write.table(chemsimdf,file=paste(c("chemsim_",gsub("[.]","",as.character(cutoff)),".sif"),collapse=""), quote=FALSE,sep="\t",col.names=FALSE,row.names=FALSE)  ## To write the cytoscape network file as an output
   return(chemsimdf)
 }
@@ -108,23 +140,12 @@ getMetaMapp <- function (rsess, pvalind=1, cutoff=0.7) {
 runMetaMapp <- function(stat_file, cutoff=0.7) {
   cfile <- strsplit(stat_file,"\n")[[1]]
   df1 <- do.call(rbind, lapply(cfile, function (x) { strsplit(x,"\t")[[1]]  } ))
-  colnames(df1) <- sapply(df1[1,],as.character)
+  colnames(df1) <- df1[1,]
   df1 <- df1[-1,]
-  
-  cids1 <- df1[,1]
-  keggids1 <- df1[,2]
-  
-  df1 <- as.data.frame(df1)
-  
-  for (j in 4:ncol(df1)) {
-      df1[,j] <- as.numeric(levels(df1[,j]))[df1[,j]]
-  }
-  
-  getKEGGRpairs(cids1, keggids1, cutoff)
+  getKEGGRpairs(df1[,1][is.na(df1[,1])==FALSE], df1[,2][is.na(df1[,1])==FALSE], cutoff)
   #exportdf <- data.frame(Pubchem_ID=df1[,1][is.na(df1[,1])==FALSE], KEGG_ID=df1[,2][is.na(df1[,1])==FALSE], CompoundName=df1[,3][is.na(df1[,1])==FALSE])
-  exportdf <- as.data.frame(setNames(replicate(length(grep("pvalue",colnames(df1))), rep("No Change",length(df1[,1])), simplify = F), paste(colnames(df1)[grep("foldchange",colnames(df1))],"_direction",sep="") ), stringsAsFactors=FALSE)
-
-  for (k in grep("pvalue",colnames(df1)  )) {
+  exportdf <- as.data.frame(setNames(replicate(3, rep("No Change",length(df1[,1])), simplify = F), paste(colnames(df1)[grep("FoldChange",colnames(df1))],"_direction",sep="") ), stringsAsFactors=FALSE)
+  for (k in grep("Pvalue",colnames(df1)  )) {
     sigind <- which(df1[,k]<0.05)
     df1[which(1:length(df1[,1])%in%sigind==FALSE),(k+1)] <- 1.0  ## convert all the non-significant fold changes to 1.00.
     for( x in sigind)  {
@@ -140,7 +161,6 @@ runMetaMapp <- function(stat_file, cutoff=0.7) {
   exportdf <- cbind(df1, exportdf)
   write.table( exportdf, file=paste("node_attributes_chemsim_krp_",gsub("[.]","",as.character(cutoff)) ,".tsv", sep="" ), col.names = T, row.names = F, quote = F, sep = "\t" )
 }
-
 
 
 
