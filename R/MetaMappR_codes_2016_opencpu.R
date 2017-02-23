@@ -144,7 +144,7 @@ runMetaMapp <- function(stat_file, cutoff=0.7) {
   df1 <- df1[-1,]
   getKEGGRpairs(df1[,1][is.na(df1[,1])==FALSE], df1[,2][is.na(df1[,1])==FALSE], cutoff)
   #exportdf <- data.frame(Pubchem_ID=df1[,1][is.na(df1[,1])==FALSE], KEGG_ID=df1[,2][is.na(df1[,1])==FALSE], CompoundName=df1[,3][is.na(df1[,1])==FALSE])
-  exportdf <- as.data.frame(setNames(replicate(length(grep("foldchange",colnames(df1)), rep("No Change",length(df1[,1])), simplify = F), paste(colnames(df1)[grep("foldchange",colnames(df1))],"_direction",sep="") ), stringsAsFactors=FALSE)
+  exportdf <- as.data.frame(setNames(replicate(  length( grep("foldchange",colnames(df1) ) ), rep("No Change",length(df1[,1])), simplify = F), paste(colnames(df1)[grep("foldchange",colnames(df1))],"_direction",sep="") ), stringsAsFactors=FALSE)
   for (k in grep("pvalue",colnames(df1)  )) {
     sigind <- which(df1[,k]<0.05)
     df1[which(1:length(df1[,1])%in%sigind==FALSE),(k+1)] <- 1.0  ## convert all the non-significant fold changes to 1.00.
