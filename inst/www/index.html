@@ -31,7 +31,7 @@
       var req = ocpu.call("getChemSimNet",{cids:txtinput,cutoff:coef}, function(session) {//calls R function:
 	    console.log(session);
 		$("#downloadChemBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
+		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
        	$("#downloadChemBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
 	    hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
@@ -49,7 +49,7 @@
       var req = ocpu.call("getKEGGRpairs",{cids:cids,keggids:keggids,cutoff:coef}, function(session) {//calls R function:
 	    console.log(session);
 		$("#downloadKRPBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
+		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
        	$("#downloadKRPBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
 		hideSpinner(loadSpinner);
 	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
@@ -71,7 +71,7 @@
 		var req = ocpu.call("getNodeAttributes",{stat_file:txtinput,samplecount:coef}, function(session) {//calls R function:
 			console.log(session);
 			$("#downloadAttrBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
 			$("#downloadAttrBtn").append('<a href="'+sifurl+'" target="_blank">Download Node Attribute file</a>')
 			hideSpinner(loadSpinner);
 		}).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
@@ -88,8 +88,8 @@
 			console.log(session);
 			$("#downloadKRP_Btn").removeAttr('disabled');
 			$("#downloadMetaMappBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[5];
-			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","")+session.output[7];
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
+			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[7];
 			$("#downloadMetaMappBtn").append('<a href="'+sifurl1+'" target="_blank">Download Node Attribute file</a>');
 			$("#downloadKRP_Btn").append('<a href="'+sifurl+'" target="_blank">Download MetaMapp Network file</a>')
 			hideSpinner(loadSpinner);
