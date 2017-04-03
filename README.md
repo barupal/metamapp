@@ -19,6 +19,9 @@ library(MetaMapp2016)
 library(opencpu)
 opencpu$browse('/library/MetaMapp2016/www')
 ```
+## Online version 
+
+www.metamapp.fiehnlab.ucdavis.edu 
 
 ## Citation
 
