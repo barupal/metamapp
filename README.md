@@ -8,7 +8,7 @@ In R, run following code.
 if (!require("devtools"))
 install.packages('devtools', repos="http://cran.rstudio.com/")
 if (!require("opencpu"))
-install.packages('opnecpu', repos="http://cran.rstudio.com/")
+install.packages('opencpu', repos="http://cran.rstudio.com/")
 if (!require("RCurl"))
 install.packages('RCurl', repos="http://cran.rstudio.com/")
 library(devtools)
