@@ -16,50 +16,10 @@
   <script type="text/javascript" src="spin.js"></script>
   <script>
   </script>
-  <title>MetaMapp 2016</title>
+  <title>MetaMapp 2017</title>
   <script>
 
   $(function(){
-
-	// Chemical Similarity Download
-	$("#computeChem").click(function(){
-	  $("#downloadChemBtn").empty();
-	  var loadSpinner = showSpinner(txt='** Calculating Chemical Similarity Networks .....');
-	  var txtinput = $("#txtinputChem").val().trim().split(/\r{1,}|\r\n{1,}|\n{1,}/);
-	  var txtinput = txtinput.map(Number);
-	  var coef = Number($("#coefchem").val());
-      var req = ocpu.call("getChemSimNet",{cids:txtinput,cutoff:coef}, function(session) {//calls R function:
-	    console.log(session);
-		$("#downloadChemBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
-       	$("#downloadChemBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
-	    hideSpinner(loadSpinner);
-	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
-	})
-
-
-	// Chemical + Kegg Reaction Pair Download
-	$("#computeKRP").click(function(){
-	  var loadSpinner = showSpinner(txt='** Calculating Chemical and BioChemical Networks .....');
-	  $("#downloadKRPBtn").empty();
-	  var txtinput = $("#txtinputKRP").val().trim().split(/\r{1,}|\r\n{1,}|\n{1,}/);
-	  var cids = txtinput.map(function(e){ return(e.split("\t")[0]) }).map(Number);
-	  var keggids = txtinput.map(function(e){ return(e.split("\t")[1]) })
-	  var coef = Number($("#coefkrp").val());
-      var req = ocpu.call("getKEGGRpairs",{cids:cids,keggids:keggids,cutoff:coef}, function(session) {//calls R function:
-	    console.log(session);
-		$("#downloadKRPBtn").removeAttr('disabled');
-		var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
-       	$("#downloadKRPBtn").append('<a href="'+sifurl+'">Download Cytoscape SIF file</a>')
-		hideSpinner(loadSpinner);
-	  }).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
-	})
-
-	// Mass Spectral Similarity Download
-	$("#computeSpec").click(function(){
-		alert("This feature would be available soon!")
-
-	})
 
 	// Node Attribute file Download
 
@@ -71,7 +31,7 @@
 		var req = ocpu.call("getNodeAttributes",{stat_file:txtinput,samplecount:coef}, function(session) {//calls R function:
 			console.log(session);
 			$("#downloadAttrBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2017/www/","").replace("index.html","")+session.output[6];
 			$("#downloadAttrBtn").append('<a href="'+sifurl+'" target="_blank">Download Node Attribute file</a>')
 			hideSpinner(loadSpinner);
 		}).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
@@ -88,26 +48,19 @@
 			console.log(session);
 			$("#downloadKRP_Btn").removeAttr('disabled');
 			$("#downloadMetaMappBtn").removeAttr('disabled');
-			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[5];
-			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2016/www/","").replace("index.html","")+session.output[7];
+			var sifurl = window.location.href.replace("/ocpu/library/MetaMapp2017/www/","").replace("index.html","")+session.output[6];
+			var sifurl1 = window.location.href.replace("/ocpu/library/MetaMapp2017/www/","").replace("index.html","")+session.output[8];
 			$("#downloadMetaMappBtn").append('<a href="'+sifurl1+'" target="_blank">Download Node Attribute file</a>');
 			$("#downloadKRP_Btn").append('<a href="'+sifurl+'" target="_blank">Download MetaMapp Network file</a>')
 			hideSpinner(loadSpinner);
 		}).fail(function() {alert("Error: " + req.responseText)});//ocpu.call
 	})
 
-
-
-
-
-
 	})
   </script>
 </head>
 
 <body>
-
-
 
 
   <div id="wrapper">
@@ -125,10 +78,7 @@
     </ul>
 </div>
 
-
-
-
-	  </div>
+  </div>
 
     <div id="page-wrapper">
       <div class="container-fluid">
@@ -151,7 +101,7 @@
               <div id="args" class="panel-body collapse in">
                 <form role="form">
                   <div class="form-group">
-                    <label for="rawinput">Paste Statistical Results.  ( <a href="metamapp_example.txt" target="_blank"> Example Data File </a> )   </label>
+                    <label for="rawinput">Paste Statistical Results.  ( <a href="metamapp_example.xlsx" target="_blank"> Example Data File </a> )   </label>
                     <textarea class="form-control" id="rawinput" name="txtinput" rows="5"></textarea>
                     <p class="help-block"> First three columns in the input file should be PubChem ID, KEGG ID and Name of Compounds, then followed by pair of columns for pvalue and fold-changes for each statistical comparison. Please use the example file as a templete. It is recommended to use median to calcualte the fold-changes, as median are not sensitive to outliers. For getting KEGG or PubChem IDs for metabolites names, use <a href="#" target="_blank"> CTS </a> tool.  For statistical analysis,  use <a href="#" target="_blank"> MetaBox </a> software. A pvalue of 0.05 will be used to identify the significantly altered metabolites. Output files are a Cytoscape network in .SIF format and a node attribute file. Cytoscape can be downloaded from here  <a href="http://www.cytoscape.org/" target="_blank">  Cytoscape.Org </a>  </p>
                   </div>
@@ -166,82 +116,19 @@
         </div>
 
 
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title"><a data-toggle="collapse" data-target="#args" href="#">Create a Chemical Similarity Network</a></h3>
-              </div>
-              <div id="args" class="panel-body collapse in">
-                <form role="form">
-                  <div class="form-group">
-                    <label for="txtinput">Paste PubChem IDs:</label>
-                    <textarea class="form-control" id="txtinputChem" name="txtinput" rows="5"></textarea>
-                    <p class="help-block">Separate each ID by a new line <a href="cids_example.txt" target="_blank"> Example file for CIDs </a> </p>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="form-group">
-                        <label for="coef">Minimum Tanimoto similarity correlation coefficient:</label>
-                        <input class="form-control" type="number" id="coefchem" name="coef" value="0.7" min="0.1" max="1" step="0.05" size=10>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                  <button id="computeChem" type="button" class="btn btn-primary">Compute</button>
-				  <button id="downloadChemBtn" type="button" class="btn btn-default" disabled>Download network</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-		<div class="row"> <!-- KEGG reaction pair and chemical similarity network both -->
-          <div class="col-lg-12">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h3 class="panel-title"><a data-toggle="collapse" data-target="#args" href="#">Create Biochemical and Chemical Similarity Network</a></h3>
-              </div>
-              <div id="args" class="panel-body collapse in">
-                <form role="form">
-                  <div class="form-group">
-                    <label for="txtinput">Paste PubChem CID and KEGG ID pairs:</label>
-                    <textarea class="form-control" id="txtinputKRP" name="txtinput" rows="5"></textarea>
-                    <p class="help-block">Each line should be pair of CID and KEGG IDs, download exmaple file here. <a href="cid_kegg_pairs.txt" target="_blank"> Example File for CIDs and KEGG IDs </a> </p>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="form-group">
-                        <label for="coef">Minimum Tanimoto similarity correlation coefficient:</label>
-                        <input class="form-control" type="number" id="coefkrp" name="coef" value="0.7" min="0.1" max="1" step="0.05" size=10>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                  <button id="computeKRP" type="button" class="btn btn-primary">Compute</button>
-				  <button id="downloadKRPBtn" type="button" class="btn btn-default" disabled><i class="fa fa-download"></i> Download network</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
+       
 		<div class="row"> <!-- Generate Node Attribute files -->
           <div class="col-lg-12">
             <div class="panel panel-info">
               <div class="panel-heading">
-                <h3 class="panel-title"><a data-toggle="collapse" data-target="#args" href="#">Generate Node attribute files for Cytocape visualization</a></h3>
+                <h3 class="panel-title"><a data-toggle="collapse" data-target="#args" href="#">Calculate t.test and generate node attribute file </a></h3>
               </div>
               <div id="args" class="panel-body collapse in">
                 <form role="form">
                   <div class="form-group">
-                    <label for="txtinput">Paste numerical data for only two groups.  </label>
+                    <label for="txtinput">Paste numerical data for only two groups.  ( <a href="ttest_example_file.xlsx" target="_blank"> Example Data File </a> ) </label>
                     <textarea class="form-control" id="txtinputAttr" name="txtinput" rows="5"></textarea>
-                    <p class="help-block">First row should be header describing class names of each sample and the first column should contain PubChem CIDs. Eeach row should be peak intensities of metabolites across samples. This tool would calculate a T-Test (two sided and equal variance) between the two groups for each metabolite and return p-values and fold-change (median of class 1/median of class 2) . Minimam number of samples per group should be three. And both classes should have equal number of samples.   <a href="ttest_example_file.txt" target="_blank"> Example Data File </a> </p>
+                    <p class="help-block">First row should be header describing class names of each sample and the first column should contain PubChem CIDs. Eeach row should be peak intensities of metabolites across samples. This tool would calculate a T-Test (two sided and equal variance) between the two groups for each metabolite and return p-values and fold-change (median of class 1/median of class 2) . Minimam number of samples per group should be three. And both classes should have equal number of samples. </p>
                   </div>
 
 				  <div class="row">
