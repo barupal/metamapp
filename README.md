@@ -14,10 +14,10 @@ install.packages('RCurl', repos="http://cran.rstudio.com/")
 library(devtools)
 library(RCurl)
 source('https://bioconductor.org/biocLite.R')
-install_github('barupal/metamapp')
-library(MetaMapp2016)
+install.packages("https://github.com/barupal/metamapp/blob/master/MetaMapp2017_2.0.1.tar.gz?raw=true", repos = NULL, type = "source")
+library(MetaMapp2017)
 library(opencpu)
-opencpu$browse('/library/MetaMapp2016/www')
+opencpu$browse('/library/MetaMapp2017/www')
 ```
 ## Online version 
 
