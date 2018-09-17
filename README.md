@@ -17,8 +17,11 @@ source('https://bioconductor.org/biocLite.R')
 install.packages("https://github.com/barupal/metamapp/blob/master/MetaMapp2017_2.0.1.tar.gz?raw=true", repos = NULL, type = "source")
 library(MetaMapp2017)
 library(opencpu)
-opencpu$browse('/library/MetaMapp2017/www')
+opencpu::ocpu_start_server()
 ```
+## Local version
+[MetaMapp Local Version](http://localhost:5656/ocpu/library/MetaMapp2017/www)
+
 ## Online version 
 
  [MetaMapp Online Version](http://metamapp.fiehnlab.ucdavis.edu)
