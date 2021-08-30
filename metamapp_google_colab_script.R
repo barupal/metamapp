@@ -97,3 +97,4 @@ runMetaMapp <- function(ndf) {
 }
 
 runMetaMapp(ndf)
+print("MetaMapp analysis was successfully completed.")
