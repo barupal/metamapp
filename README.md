@@ -1,6 +1,8 @@
 # MetaMapp
 The code need to be updated for the latest version of R (> 4.0.0). We are working on it. 
 
+# Google Colab Notebook.
+[MetaMapp Google Colab Notebook](https://colab.research.google.com/drive/1UsN73MOhXn1lTxYKyWEsfb2gsI_t1sfj#scrollTo=5mJSY0l6M5hp)
 
 ## Online version 
 
