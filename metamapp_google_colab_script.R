@@ -2,7 +2,7 @@
 # @version August 30th 2021, optimized for google colab
 
 inputfile <- "metamapp_input.xlsx"
-cutoff = 0.7
+#cutoff = 0.7
 download.file("https://raw.githubusercontent.com/barupal/metamapp/master/KRPlinks.txt", destfile = "KRPlinks.txt")
 krp <- read.table("KRPlinks.txt", sep="\t")
 ndf <- data.frame(readxl::read_xlsx(path = inputfile, sheet = "input"), stringsAsFactors = F)
